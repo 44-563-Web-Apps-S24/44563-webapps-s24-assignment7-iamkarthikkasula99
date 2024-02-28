@@ -24,7 +24,7 @@
             <div>Click on the locations to find coins, beware the monster</div>
             <div id="locations">Number of locations checked is zero.</div>
             <div id="score">Score is Zero.</div>
-            <div>Click for Help.</div>
+            <div onclick="help()"><i>Click for help</i></div>
             <div id="help">Help report</div>
         </div>
     </div>
@@ -85,7 +85,73 @@
         </div>
         <script>
             let ids = new Array(35);
-        ids = ["Id0", "Id1", "Id2", "Id3", "Id4", "Id5", "Id6", "Id7", "Id8", "Id9", "Id10", "Id11", "Id12", "Id13", "Id14", "Id15", "Id16", "Id17", "Id18", "Id19", "Id20", "Id21", "Id22", "Id23", "Id24", "Id25", "Id26", "Id27", "Id28", "Id29", "Id30", "Id31", "Id32", "Id33", "Id34"]
+        ids = ["ID0", "ID1", "ID2", "ID3", "ID4", "ID5", "ID6", "ID7", "ID8", "ID9", "ID10", "ID11", "ID12", "ID13", "ID14", "ID15", "ID16", "ID17", "ID18", "ID19", "ID20", "ID21", "ID22", "ID23", "ID24", "ID25", "ID26", "ID27", "ID28", "ID29", "ID30", "ID31", "ID32", "ID33", "ID34"]
+
+        var score = 0;
+        var locations = 0;
+        var lastLocation = 0;
+        var fancyCoinLocations = [2, 5, 14, 19, 23, 33];
+        var monsterLocation = 20;
+        var gameOver = false;
+
+        function check(position) {
+            if (gameOver == true) {
+                return;
+            }
+
+            let id = ids[position];
+            var img = document.getElementById(id);
+            if (fancyCoinLocations.includes(position)) {
+                img.src = "fancy coin.jpg";
+                score += 3;
+                locations++;
+                document.getElementById("locations").innerText = `Locations Checked: ` + locations;
+                document.getElementById("score").innerText = `Score is: ` + score;
+
+            }
+            else if (position == monsterLocation) {
+                img.src = "monster.jpg";
+                gameOver = true;
+                score -= 5;
+                locations++;
+                document.getElementById("locations").innerText = `Locations Checked: ` + locations;
+                document.getElementById("score").innerText = `Score is: ` + score;
+            }
+            else {
+                img.src = "coin.jpg";
+                score += 1;
+                locations++;
+                document.getElementById("locations").innerText = `Locations Checked: ` + locations;
+                document.getElementById("score").innerText = `Score is: ` + score;
+            }
+
+            lastLocation = position;
+        }
+
+        function help() {
+
+            var col = lastLocation % 5;
+            var row = Math.floor(lastLocation / 5);
+
+            const kinship_Locations = [lastLocation - 1, lastLocation + 1, lastLocation - 5, lastLocation + 5 ];
+            for (const kinship of kinship_Locations) {
+                const location_Adjusted = (kinship + 35) % 35;
+                if (fancyCoinLocations.includes(location_Adjusted)) {
+                    document.getElementById("help").innerHTML = "So close";
+                    return;
+                }
+
+            }
+            var monsterRow = Math.floor(monsterLocation / 5);
+            var monsterCol = monsterLocation % 5;
+            if (row - monsterRow < 1 && col - monsterCol < 1) {
+                document.getElementById("help").innerHTML = "Grr";
+            }
+            else {
+                document.getElementById("help").innerHTML = "All clear";
+            }
+            document.getElementById("help").onclick = help;
+        }
         </script>
 
 
