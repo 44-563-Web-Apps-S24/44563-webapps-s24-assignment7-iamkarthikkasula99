@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>game timer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <h1>Karthik kasula speed check</h1>
+
+  <div id="target">Your time</div>
+  <div id="counter">Count</div>
+
+    <button id="start_Btn" class="btn-warning" onclick="startTime()">Start Timer</button>
+    <button id="stop_Btn" class="btn-warning">Stop Timer</button>
+
+    <script>
+        let stopTime = undefined;
+        function countdown() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    document.getElementById('counter').innerHTML = i;
+                }, (4 - i) * 1000);
+            }
+
+            setTimeout(() => {
+                if (stopTime === undefined) {
+                    document.getElementById('target').textContent = "Too Slow";
+                } else {
+                    const elaspTime = stopTime - (Date.now() - 4000);
+                    document.getElementById('target').textContent = "Time was " + elaspTime + " milliseconds";
+                }
+            }, 4000);
+        }
+        document.getElementById('start_Btn').onclick = countdown;
+
+        function recordTime() {
+            stopTime = Date.now();
+            console.log("Stop Time: ", stopTime);
+        }
+        document.getElementById('stop_Btn').onclick = recordTime;
+    </script>
+
+</body>
+
+</body>
+</html>
