@@ -24,6 +24,7 @@
     <div id="score"  style="background-color:lavenderblush;">Score is zero</div>
     <div class=" bg-warning" onclick="help()">Click for help.</div>
     <div id="help"  style="background-color:blanchedalmond">Help report</div>
+    <button onclick="newgame()">New Game</button> 
             <div class="container">
                 <div class="gamebox">
                     <img id="0" src="building.jpg" width="150px" height="150px" alt="building" onclick="check(0)">
@@ -193,6 +194,22 @@
             }
             document.getElementById("help").innerHTML = returnValue;
         }
+            //bonus 
+            function newgame(){
+                gameOver=false;
+                score = 0; 
+                locations = 0;
+                let imgrest = document.getElementsByTagName("img");
+                for (i=0; i < imgrest.length; i++){
+                    imgrest[i].src ="building.jpg";
+                }
+                monsterLocation = Math.floor(Math.random()*35);
+                for (i=0; i < fancyCoinLocations.length; i++){
+                    fancyCoinLocations[i]=Math.floor(Math.random()*35);
+                }
+                document.getElementById("score").innerText = "Score is " + score + ".";
+                document.getElementById("locations").innerText = "Number of locations checked is " + locations + ".";
+            }
     </script>
 </body>
 </html>
